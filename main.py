@@ -61,4 +61,4 @@ print(model.wv.most_similar(positive='low'))
 w1 = 'dirty'
 w2 = 'small'
 w3 = "bad"
-print("The similarity between " + w1 + ", " + w2 + " and " + w3 +" is {}".format(model.wv.similarity(w1, w2)))
+print("The similarity between " + w1 + ", " + w2 + " and " + w3 +" is {}".format(model.wv.similarity(w1, w2, w3)))
