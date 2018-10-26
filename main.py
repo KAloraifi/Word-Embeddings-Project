@@ -19,7 +19,7 @@ def show_file_contents(input_file):
 def read_input(input_file):
     """This method reads the input file which is in gzip format"""
 
-    logging.info("reading file {0}...this may take a while".format(input_file))
+    logging.info("reading file {0}...this may take a while!".format(input_file))
     with open(input_file, 'rb') as f:
         for i, line in enumerate(f):
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     FullCorpus = list(read_input(data_file))
     PartOneOfCorpus = FullCorpus[:len(FullCorpus) // 2]
     PartTwoOCorpus = FullCorpus[len(FullCorpus) // 2:]
-    logging.info("Done reading data file")
+    logging.info("Done reading dataset file")
 
     # build vocabulary and train model
     model = Word2Vec(FullCorpus, size=150, window=10, min_count=2)
@@ -55,9 +55,10 @@ print(words)
 # Testing part:
 
 # print 6 most similar words
-print(model.wv.most_similar(positive='cheap'))
+print(model.wv.most_similar(positive='low'))
 
 # print similarity between two words in percentage
 w1 = 'dirty'
 w2 = 'small'
-print("The similarity between " + w1 + " and " + w2 + " is {}".format(model.wv.similarity(w1, w2)))
+w3 = "bad"
+print("The similarity between " + w1 + ", " + w2 + " and " + w3 +" is {}".format(model.wv.similarity(w1, w2)))
