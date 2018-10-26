@@ -1,6 +1,8 @@
-import gensim
 import logging
 import os
+
+import gensim
+from gensim.models import Word2Vec
 
 logging.basicConfig(
     format='%(asctime)s : %(levelname)s : %(message)s',
@@ -29,81 +31,33 @@ def read_input(input_file):
 
 
 if __name__ == '__main__':
-
     abspath = os.path.dirname(os.path.abspath(__file__))
-    data_file = os.path.join(abspath, "../reviews_data.txt.gz")
+    data_file = os.path.join(abspath, "reviews_data.txt")
 
     # read the tokenized reviews into a list
-    # each review item becomes a serries of words
+    # each review item becomes a series of words
     # so this becomes a list of lists
-    documents = list(read_input(data_file))
+    FullCorpus = list(read_input(data_file))
+    PartOneOfCorpus = FullCorpus[:len(FullCorpus) // 2]
+    PartTwoOCorpus = FullCorpus[len(FullCorpus) // 2:]
     logging.info("Done reading data file")
 
     # build vocabulary and train model
-    model = gensim.models.Word2Vec(
-        documents,
-        size=150,
-        window=10,
-        min_count=2,
-        workers=10)
-    model.train(documents, total_examples=len(documents), epochs=10)
+    model = Word2Vec(FullCorpus, size=150, window=10, min_count=2)
 
-    # save only the word vectors
-    model.wv.save(os.path.join(abspath, "../vectors/default"))
+# summarize the loaded model
+print(model)
 
-    w1 = "dirty"
-    print("Most similar to {0}".format(w1), model.wv.most_similar(positive=w1))
+# summarize vocabulary
+words = list(model.wv.vocab)
+print(words)
 
-    # look up top 6 words similar to 'polite'
-    w1 = ["polite"]
-    print(
-        "Most similar to {0}".format(w1),
-        model.wv.most_similar(
-            positive=w1,
-            topn=6))
+# Testing part:
 
-    # look up top 6 words similar to 'france'
-    w1 = ["france"]
-    print(
-        "Most similar to {0}".format(w1),
-        model.wv.most_similar(
-            positive=w1,
-            topn=6))
+# print 6 most similar words
+print(model.wv.most_similar(positive='cheap'))
 
-    # look up top 6 words similar to 'shocked'
-    w1 = ["shocked"]
-    print(
-        "Most similar to {0}".format(w1),
-        model.wv.most_similar(
-            positive=w1,
-            topn=6))
-
-    # look up top 6 words similar to 'shocked'
-    w1 = ["beautiful"]
-    print(
-        "Most similar to {0}".format(w1),
-        model.wv.most_similar(
-            positive=w1,
-            topn=6))
-
-    # get everything related to stuff on the bed
-    w1 = ["bed", 'sheet', 'pillow']
-    w2 = ['couch']
-    print(
-        "Most similar to {0}".format(w1),
-        model.wv.most_similar(
-            positive=w1,
-            negative=w2,
-            topn=10))
-
-    # similarity between two different words
-    print("Similarity between 'dirty' and 'smelly'",
-          model.wv.similarity(w1="dirty", w2="smelly"))
-
-    # similarity between two identical words
-    print("Similarity between 'dirty' and 'dirty'",
-          model.wv.similarity(w1="dirty", w2="dirty"))
-
-    # similarity between two unrelated words
-    print("Similarity between 'dirty' and 'clean'",
-          model.wv.similarity(w1="dirty", w2="clean"))
+# print similarity between two words in percentage
+w1 = 'dirty'
+w2 = 'small'
+print("The similarity between " + w1 + " and " + w2 + " is {}".format(model.wv.similarity(w1, w2)))
