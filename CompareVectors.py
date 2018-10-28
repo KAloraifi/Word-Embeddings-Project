@@ -23,7 +23,8 @@ def getTotalDistance(VectorList1,VectorList2):
 def combineVectors(VectorList1,VectorList2):
     combinedVectorsList = []
     for vector1, vector2 in zip(VectorList1, VectorList2):
-        combinedVectorsList = vector1+vector2
+        newVector = vector1+vector2
+        combinedVectorsList.append(newVector)
     return combinedVectorsList
 
 # ListOfCommonWords =\
@@ -36,7 +37,8 @@ def combineVectors(VectorList1,VectorList2):
 #                 'streetlife', 'perched', 'whistled', 'wirless', 'ventilators', 'classless', 'goers', 'bitterly',
 #                 'facing', 'inverted', 'bein', 'jacuzzis', 'allbeit', 'berber', 'leery', 'miserables','rama', 'flannels'
 #                ]
-#This will be used later to get all common words in both models.
+
+#This will creat a list of all common words in both models.
 ListOfCommonWords = list(set(list(PartOneOfCorpus_model.wv.vocab)).intersection(list(PartTwoOCorpus_model.wv.vocab)))
 
 #Get 3 vctors one for each word in the list using the models above.
@@ -47,6 +49,6 @@ PartTwoOCorpus_VectorList = getVectorsFromModel(PartTwoOCorpus_model, ListOfComm
 #Allisgn the two smaller vectors and create a combined vector.
 CombinedVectorsList = combineVectors(PartOneOfCorpus_VectorList, PartTwoOCorpus_VectorList)
 
-#//Compare the resulted vector with the vector obtained from the full corpus model (Tip: compare using distance)
+#Compare the resulted vector with the vector obtained from the full corpus model (Tip: compare using distance)
 TotalDis = getTotalDistance(FullCorpus_VectorList, CombinedVectorsList)
 print("Average distance for all vectors is :",TotalDis/len(ListOfCommonWords))
