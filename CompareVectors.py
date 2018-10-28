@@ -13,5 +13,13 @@ ListOfWords = [
                'briefed', 'say', 'keep', 'up', 'coroporate', 'couple', 'fridge', 'magnets', 'box', 'found'
                ]
 
-#//TODO: Get 3 Vectors for each word in the list using the models above.
+#//TODO: Get 3 vctors one for each word in the list using the models above.
+
+
+#//TODO: Allisgn the two smaller vectors and create a combined vector.
+
+
+#//TODO: Compare the resulted vector with the vector obtained from the full corpus model (Tip: compare using distance)
+
+
 
