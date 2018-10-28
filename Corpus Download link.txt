@@ -1,0 +1,3 @@
+https://raw.githubusercontent.com/kavgan/nlp-text-mining-working-examples/master/word2vec/reviews_data.txt.gz
+
+extract after downloading

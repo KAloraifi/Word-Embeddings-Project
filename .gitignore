@@ -1,0 +1,7 @@
+.idea/
+reviews_data.txt
+FullCorpus_model.bin
+PartOneOfCorpus_model.bin
+PartTwoOCorpus_model.bin
+FullCorpus_model.bin.trainables.syn1neg.npy
+FullCorpus_model.bin.wv.vectors.npy

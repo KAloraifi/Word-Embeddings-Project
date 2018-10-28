@@ -1,6 +1,5 @@
 import logging
 import os
-
 import gensim
 from gensim.models import Word2Vec
 
@@ -45,3 +44,21 @@ if __name__ == '__main__':
 
 # summarize the loaded model
 print(model)
+
+# summarize vocabulary
+words = list(model.wv.vocab)
+print(words)
+
+# save model
+model.save('PartOneOfCorpus_model.bin')
+
+# # Testing part:
+#
+# # print 6 most similar words
+# print(model.wv.most_similar(positive='low'))
+#
+# # print similarity between two words in percentage
+# w1 = 'dirty'
+# w2 = 'small'
+# w3 = "bad"
+# print("The similarity between " + w1 + ", " + w2 + " and " + w3 +" is {}".format(model.wv.similarity(w1, w2, w3)))
