@@ -13,35 +13,31 @@ def getVectorsFromModel(model, wordsList):
         vectorsList.append(vector)
     return vectorsList
 
-def getTotalDis(VectorList1,VectorList2):
-    totalDis = 0
-    for vector1,vector2 in zip(VectorList1, VectorList2):
-        A = numpy.array(vector1)
-        B = numpy.array(vector2)
-        dist = numpy.linalg.norm(A - B)
-        totalDis += dist
-    return totalDis
+def getTotalDistance(VectorList1,VectorList2):
+    totalDistance = 0
+    for vector1, vector2 in zip(VectorList1, VectorList2):
+        distance = numpy.linalg.norm(vector1 - vector2)
+        totalDistance += distance
+    return totalDistance
 
 def combineVectors(VectorList1,VectorList2):
     combinedVectorsList = []
-    for vector1,vector2 in zip(VectorList1, VectorList2):
-        A = numpy.array(vector1)
-        B = numpy.array(vector2)
-        combinedVectorsList = A+B
+    for vector1, vector2 in zip(VectorList1, VectorList2):
+        combinedVectorsList = vector1+vector2
     return combinedVectorsList
 
-ListOfCommonWords =\
-                [
-                'scone', 'downtowns', 'satisfactorily', 'meticulously', 'remit', 'eyelid', 'absolutly', 'aproximately',
-                'disppointing', 'tons', 'rancheros', 'someplace', 'caveat', 'iin', 'abigail', 'prowess', 'haste',
-                'accomidating', 'artisan', 'northumberland', 'thrown', 'regulating', 'haggard', 'garcia', 'clubbing',
-                'etre', 'allo', 'negligible', 'blowdrying', 'sakes', 'reaaly', 'taht', 'reschedule',
-                'nickeled', 'accumulates', 'differnent', 'trek', 'appologies', 'clanked','implementing', 'traffic',
-                'streetlife', 'perched', 'whistled', 'wirless', 'ventilators', 'classless', 'goers', 'bitterly',
-                'facing', 'inverted', 'bein', 'jacuzzis', 'allbeit', 'berber', 'leery', 'miserables','rama', 'flannels'
-               ]
+# ListOfCommonWords =\
+#                 [
+#                 'scone', 'downtowns', 'satisfactorily', 'meticulously', 'remit', 'eyelid', 'absolutly', 'aproximately',
+#                 'disppointing', 'tons', 'rancheros', 'someplace', 'caveat', 'iin', 'abigail', 'prowess', 'haste',
+#                 'accomidating', 'artisan', 'northumberland', 'thrown', 'regulating', 'haggard', 'garcia', 'clubbing',
+#                 'etre', 'allo', 'negligible', 'blowdrying', 'sakes', 'reaaly', 'taht', 'reschedule',
+#                 'nickeled', 'accumulates', 'differnent', 'trek', 'appologies', 'clanked','implementing', 'traffic',
+#                 'streetlife', 'perched', 'whistled', 'wirless', 'ventilators', 'classless', 'goers', 'bitterly',
+#                 'facing', 'inverted', 'bein', 'jacuzzis', 'allbeit', 'berber', 'leery', 'miserables','rama', 'flannels'
+#                ]
 #This will be used later to get all common words in both models.
-# ListOfCommonWords = list(set(list(PartOneOfCorpus_model.wv.vocab)).intersection(list(PartTwoOCorpus_model.wv.vocab)))
+ListOfCommonWords = list(set(list(PartOneOfCorpus_model.wv.vocab)).intersection(list(PartTwoOCorpus_model.wv.vocab)))
 
 #Get 3 vctors one for each word in the list using the models above.
 FullCorpus_VectorList = getVectorsFromModel(FullCorpus_model, ListOfCommonWords)
@@ -52,5 +48,5 @@ PartTwoOCorpus_VectorList = getVectorsFromModel(PartTwoOCorpus_model, ListOfComm
 CombinedVectorsList = combineVectors(PartOneOfCorpus_VectorList, PartTwoOCorpus_VectorList)
 
 #//Compare the resulted vector with the vector obtained from the full corpus model (Tip: compare using distance)
-TotalDis = getTotalDis(FullCorpus_VectorList, CombinedVectorsList)
+TotalDis = getTotalDistance(FullCorpus_VectorList, CombinedVectorsList)
 print("Average distance for all vectors is :",TotalDis/len(ListOfCommonWords))
