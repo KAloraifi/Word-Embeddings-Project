@@ -22,7 +22,7 @@ def getVectorsFromModel(model, wordsList):
     return vectorsList
 
 
-def combineVectors(VectorList1, VectorList2):
+def combineVectors_FirstStrategy(VectorList1, VectorList2):
     """
     This method takes two vector lists and combine each element (vector) with its corresponding element (vector)
     and then add the new vector in a new list. Repeat...
@@ -35,6 +35,18 @@ def combineVectors(VectorList1, VectorList2):
         combinedVectorsList.append(newVector)
     return combinedVectorsList
 
+def combineVectors_SecondStrategy(VectorList1, VectorList2):
+    """
+    This method takes two vector lists and combine each element (vector) with its corresponding element (vector)
+    and then add the new vector in a new list. Repeat...
+    Return the new list
+    """
+
+    combinedVectorsList = []
+    for vector1, vector2 in zip(VectorList1, VectorList2):
+        newVector = (vector1 + vector2)/2
+        combinedVectorsList.append(newVector)
+    return combinedVectorsList
 
 def compareVectors(VectorList1, VectorList2):
     """
@@ -42,7 +54,6 @@ def compareVectors(VectorList1, VectorList2):
     and then calculate the difference between them and add it to totalDistance. Repeat...
     Return totalDistance
     """
-
     totalDistance = 0
     for vector1, vector2 in zip(VectorList1, VectorList2):
         distance = numpy.linalg.norm(vector1 - vector2)
@@ -55,12 +66,21 @@ part_one_corpus_set = set(list(PartOneOfCorpus_model.wv.vocab))
 part_two_corpus_set = set(list(PartTwoOCorpus_model.wv.vocab))
 ListOfCommonWords = list(part_one_corpus_set.intersection(part_two_corpus_set))
 
+#Create vectors list for each model
 FullCorpus_VectorList = getVectorsFromModel(FullCorpus_model, ListOfCommonWords)
 PartOneOfCorpus_VectorList = getVectorsFromModel(PartOneOfCorpus_model, ListOfCommonWords)
 PartTwoOCorpus_VectorList = getVectorsFromModel(PartTwoOCorpus_model, ListOfCommonWords)
 
-Combined_VectorsList = combineVectors(PartOneOfCorpus_VectorList, PartTwoOCorpus_VectorList)
+#combine vectors using different strategies
+Combined_VectorsList = combineVectors_FirstStrategy(PartOneOfCorpus_VectorList, PartTwoOCorpus_VectorList)
+Combined_VectorsList2 = combineVectors_SecondStrategy(PartOneOfCorpus_VectorList, PartTwoOCorpus_VectorList)
 
+#Calculate distance between combined vector and the full corpus vector
 TotalDis = compareVectors(FullCorpus_VectorList, Combined_VectorsList)
+TotalDis2 = compareVectors(FullCorpus_VectorList, Combined_VectorsList2)
 AverageDis = TotalDis / len(ListOfCommonWords)
+AverageDis2 = TotalDis2 / len(ListOfCommonWords)
+
 print("Average distance for all vectors is: {:.2f}".format(AverageDis))
+print("Average distance for all vectors is: {:.2f}".format(AverageDis2))
+
