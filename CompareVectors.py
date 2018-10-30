@@ -22,7 +22,7 @@ def getVectorsFromModel(model, wordsList):
     return vectorsList
 
 
-def combineVectors_FirstStrategy(VectorList1, VectorList2):
+def combineVectors_SummationStrategy(VectorList1, VectorList2):
     """
     This method takes two vector lists and combine each element (vector) with its corresponding element (vector)
     and then add the new vector in a new list. Repeat...
@@ -35,7 +35,7 @@ def combineVectors_FirstStrategy(VectorList1, VectorList2):
         combinedVectorsList.append(newVector)
     return combinedVectorsList
 
-def combineVectors_SecondStrategy(VectorList1, VectorList2):
+def combineVectors_AverageStrategy(VectorList1, VectorList2):
     """
     This method takes two vector lists and combine each element (vector) with its corresponding element (vector)
     and then add the new vector in a new list. Repeat...
@@ -72,8 +72,8 @@ PartOneOfCorpus_VectorList = getVectorsFromModel(PartOneOfCorpus_model, ListOfCo
 PartTwoOCorpus_VectorList = getVectorsFromModel(PartTwoOCorpus_model, ListOfCommonWords)
 
 #combine vectors using different strategies
-Combined_VectorsList = combineVectors_FirstStrategy(PartOneOfCorpus_VectorList, PartTwoOCorpus_VectorList)
-Combined_VectorsList2 = combineVectors_SecondStrategy(PartOneOfCorpus_VectorList, PartTwoOCorpus_VectorList)
+Combined_VectorsList = combineVectors_SummationStrategy(PartOneOfCorpus_VectorList, PartTwoOCorpus_VectorList)
+Combined_VectorsList2 = combineVectors_AverageStrategy(PartOneOfCorpus_VectorList, PartTwoOCorpus_VectorList)
 
 #Calculate distance between combined vector and the full corpus vector
 TotalDis = compareVectors(FullCorpus_VectorList, Combined_VectorsList)
@@ -81,6 +81,6 @@ TotalDis2 = compareVectors(FullCorpus_VectorList, Combined_VectorsList2)
 AverageDis = TotalDis / len(ListOfCommonWords)
 AverageDis2 = TotalDis2 / len(ListOfCommonWords)
 
-print("Average distance for all vectors is: {:.2f}".format(AverageDis))
-print("Average distance for all vectors is: {:.2f}".format(AverageDis2))
+print("Average distance for all vectors using summation strategy is: {:.2f}".format(AverageDis))
+print("Average distance for all vectors using average strategy is: {:.2f}".format(AverageDis2))
 
