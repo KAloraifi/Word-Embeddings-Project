@@ -1,5 +1,6 @@
 import logging
 import os
+
 import gensim
 from gensim.models import Word2Vec
 
@@ -16,13 +17,15 @@ def show_file_contents(input_file):
 
 
 def read_input(input_file):
-    """This method reads the input file which is in txt format"""
+    """
+    This method reads the input file which is in txt format and perform some tokenization.
+    """
 
     logging.info("reading file {0}...this may take a while".format(input_file))
     with open(input_file, 'rb') as f:
         for i, line in enumerate(f):
 
-            if (i % 10000 == 0):
+            if i % 10000 == 0:
                 logging.info("read {0} reviews".format(i))
             # do some pre-processing and return list of words for each review
             # text
@@ -52,13 +55,12 @@ print(words)
 # save model
 model.save('PartTwoOCorpus_model.bin')
 
-# Testing part:
+# # Testing part:
 
 # # print 6 most similar words
-# print(model.wv.most_similar(positive='low'))
+# print(model.wv.most_similar(positive='low', topn=6))
 #
-# # print similarity between two words in percentage
+# # print similarity between two words in proportion
 # w1 = 'dirty'
 # w2 = 'small'
-# w3 = "bad"
-# print("The similarity between " + w1 + ", " + w2 + " and " + w3 +" is {}".format(model.wv.similarity(w1, w2, w3)))
+# print("The similarity between {} and {} is {}".format(w1, w2, model.wv.similarity(w1, w2)))
